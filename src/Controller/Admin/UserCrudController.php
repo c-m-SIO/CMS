@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 
 class UserCrudController extends AbstractCrudController
 {
@@ -25,6 +26,14 @@ class UserCrudController extends AbstractCrudController
             TextField::new('password'),
             ArrayField::new('roles'),
         ];
+    }
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('id')
+            ->add('username')
+            ->add('roles')
+        ;
     }
     
 }

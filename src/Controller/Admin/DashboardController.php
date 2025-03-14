@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Commentaire;
 use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminDashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
@@ -80,6 +81,13 @@ class DashboardController extends AbstractDashboardController
          return $this->redirect($adminUrlGenerator->setController(TagCrudController::class)->generateUrl());
     }
 
+    #[Route('/admin/commentaire', name: 'admin_commentaire')]
+    public function indexCommentaire(): Response
+    {
+        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+         return $this->redirect($adminUrlGenerator->setController(CommentaireCrudController::class)->generateUrl());
+    }
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
@@ -95,5 +103,6 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Article', 'fa fa-newspaper-o', Article::class);
         yield MenuItem::linkToCrud('Categorie', 'fa-solid fa-ticket', Categorie::class);
         yield MenuItem::linkToCrud('Tag', 'fa fa-tag', Tag::class);
+        yield MenuItem::linkToCrud('Commentaire', 'fa fa-comments', Commentaire::class);
     }
 }

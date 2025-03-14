@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 
 class CategorieCrudController extends AbstractCrudController
 {
@@ -24,6 +25,13 @@ class CategorieCrudController extends AbstractCrudController
             TextField::new('titre'),
             AssociationField::new('articles')->setFormTypeOption('choice_label', 'titre')->setLabel('Article')
         ];
+    }
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('titre')
+            ->add('articles')
+        ;
     }
     
 }

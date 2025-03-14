@@ -8,6 +8,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 
 class GalerieCrudController extends AbstractCrudController
 {
@@ -31,6 +32,15 @@ class GalerieCrudController extends AbstractCrudController
             ->setFormTypeOption('multiple', true) 
             ->setLabel('Pages')
         ];
+    }
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('titre')
+            ->add('description')
+            ->add('images')
+            ->add('pages')
+        ;
     }
     
 }

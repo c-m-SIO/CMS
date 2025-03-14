@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FileField;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 
 class ImageCrudController extends AbstractCrudController
 {
@@ -30,6 +31,13 @@ class ImageCrudController extends AbstractCrudController
             ->setUploadedFileNamePattern('[slug]-[timestamp].[extension]')  
             ->setRequired(true),
         ];
+    }
+    public function configureFilters(Filters $filters): Filters
+    {
+        return $filters
+            ->add('legende')
+            ->add('url')
+        ;
     }
     
 }
