@@ -31,9 +31,16 @@ class DashboardController extends AbstractDashboardController
         // return $this->redirectToRoute('app_user_index');
         //
         // 1.2) Same example but using the "ugly URLs" that were used in previous EasyAdmin versions:
-         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-         return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
+        $user = $this->getUser();
+        $isAdmin = in_array('ROLE_ADMIN', $user->getRoles(), true);
+        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
 
+        if($isAdmin){
+         return $this->redirect($adminUrlGenerator->setController(UserCrudController::class)->generateUrl());
+        }
+        else{
+            return $this->redirect($adminUrlGenerator->setController(PageCrudController::class)->generateUrl());
+        }
         // Option 2. You can make your dashboard redirect to different pages depending on the user
         //
         // if ('jane' === $this->getUser()->getUsername()) {
@@ -45,6 +52,8 @@ class DashboardController extends AbstractDashboardController
         //
         // return $this->render('some/path/my-dashboard.html.twig');
     }
+
+
 
     #[Route('/admin/article', name: 'admin_article')]
     public function indexArticle(): Response
@@ -96,13 +105,31 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToDashboard('Utilisateurs', 'fa fa-user');
-        yield MenuItem::linkToCrud('Galerie', 'fa fa-folder-open', Galerie::class);
-        yield MenuItem::linkToCrud('Page', 'fa fa-pencil-square-o', Page::class);
-        yield MenuItem::linkToCrud('Image', 'fa fa-picture-o', Image::class);
-        yield MenuItem::linkToCrud('Article', 'fa fa-newspaper-o', Article::class);
-        yield MenuItem::linkToCrud('Categorie', 'fa-solid fa-ticket', Categorie::class);
-        yield MenuItem::linkToCrud('Tag', 'fa fa-tag', Tag::class);
-        yield MenuItem::linkToCrud('Commentaire', 'fa fa-comments', Commentaire::class);
+        $user = $this->getUser();
+        $isAdmin = in_array('ROLE_ADMIN', $user->getRoles(), true);
+        if($isAdmin){
+            $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+            
+            yield MenuItem::linkToDashboard('Utilisateurs', 'fa fa-user');
+            yield MenuItem::linkToCrud('Galerie', 'fa fa-folder-open', Galerie::class);
+            yield MenuItem::linkToCrud('Page', 'fa fa-pencil-square-o', Page::class);
+            yield MenuItem::linkToCrud('Image', 'fa fa-picture-o', Image::class);
+            yield MenuItem::linkToCrud('Article', 'fa fa-newspaper-o', Article::class);
+            yield MenuItem::linkToCrud('Categorie', 'fa-solid fa-ticket', Categorie::class);
+            yield MenuItem::linkToCrud('Tag', 'fa fa-tag', Tag::class);
+            yield MenuItem::linkToCrud('Commentaire', 'fa fa-comments', Commentaire::class);;
+        }
+        else{
+            yield MenuItem::linkToCrud('Galerie', 'fa fa-folder-open', Galerie::class);
+            yield MenuItem::linkToCrud('Page', 'fa fa-pencil-square-o', Page::class);
+            yield MenuItem::linkToCrud('Image', 'fa fa-picture-o', Image::class);
+            yield MenuItem::linkToCrud('Article', 'fa fa-newspaper-o', Article::class);
+            yield MenuItem::linkToCrud('Categorie', 'fa-solid fa-ticket', Categorie::class);
+            yield MenuItem::linkToCrud('Tag', 'fa fa-tag', Tag::class);
+            yield MenuItem::linkToCrud('Commentaire', 'fa fa-comments', Commentaire::class);
+        }
+
+
+        
     }
 }
