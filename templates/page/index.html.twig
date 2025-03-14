@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page index{% endblock %}
+
+{% block body %}
+<!DOCTYPE html>
+  <section class="py-5 text-center container">
+    <div class="row py-lg-5">
+      <div class="col-lg-6 col-md-8 mx-auto">
+        <h1 class="fw-light">Liste des pages</h1>
+        <p class="lead text-body-secondary">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
+        <p>
+          <a href="#" class="btn btn-primary my-2">Main call to action</a>
+          <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for page in pages %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ page.titre }}" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ page.titre }}</text></svg>
+            <div class="card-body">
+              <p class="card-text">{{ page.contenu | raw }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{{ path('app_page_show', {'slug': page.slug}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
+                  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REDAC') %}
+                    <a href="{{ path('admin_article', {'slug': page.slug}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
+                  {% endif %}
+                </div>
+                <small class="btn btn-dark my-2">14 Février</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+      
+    </div>
+  </div>
+  {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REDAC') %}     
+  <div class="mx-auto text-center">
+    <a href="{{ path('admin_page') }}"><button type="button" class="col-1 btn btn-primary my-2">Gérer</button></a>
+  </div>
+  {% endif %}
+
+    
+{% endblock %}

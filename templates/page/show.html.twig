@@ -1,0 +1,76 @@
+{# {% extends 'base.html.twig' %}
+
+{% block title %}article{% endblock %}
+
+{% block body %} #}
+
+{% extends 'base.html.twig' %}
+{% block meta %}<meta name="description" content="{{ page.meta }}"{% endblock %}
+{% block title %}Page index{% endblock %}
+
+{% block body %}
+  <h1 class="text-center">{{ page.titre }}</h1>
+  <div class="album py-5 bg-body-tertiary">
+    <div class="container">
+      <p class="lead mb-4">{{ page.contenu | raw }}</p>
+      <h2>Les articles</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+      {% for article in articles %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: {{ article.titre }}" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ article.titre }}</text></svg>
+            <div class="card-body">
+              <p class="card-text">{{ article.description | raw }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="btn-group">
+                  <a href="{{ path('app_article_show', {'slug': article.slug}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
+                  <a href="{{ path('admin_article') }}"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
+                </div>
+                <small class="btn btn-dark my-2">{{ article.date|date('Y-m-d H:i:s')  }}</small>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas d'articles sur cette page</td>
+            </tr>
+        {% endfor %}
+      </div>
+      <hr>
+      <h2>Les galleries</h2>
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        
+        {% for galerie in galeries %}
+        <div class="col">
+          <div class="card shadow-sm">
+            <img class="card-img-top" width="100%" height="225" src="{{ asset('uploads/images/' ~ galerie.images[0].url) }}" aria-label="Placeholder: {{ galerie.titre }}" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ galerie.titre }}</text></svg>
+            <div class="card-body">
+              <p class="card-text">{{ galerie.description | raw }}</p>
+              <div class="d-flex justify-content-between align-items-center">
+                 <div class="btn-group">
+                  <a href="{{ path('admin_galerie_edit', { 'id': galerie.id }) }}"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
+                </div> 
+                {# <small class="btn btn-dark my-2">{{ galerie.date|date('Y-m-d H:i:s')  }}</small> #}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% else %}
+            <tr>
+                <td colspan="4">Pas de galerie associée à cette page</td>
+            </tr>
+        {% endfor %}
+      
+    </div>
+  </div>
+        
+  {% if is_granted('ROLE_ADMIN') %}
+    <div class="mx-auto text-center">
+      <a href="{{ path('admin_article') }}"><button type="button" class="col-1 btn btn-primary my-2">Gérer</button></a>
+    </div>
+  {% elseif is_granted('ROLE_USER')%}
+
+  {% endif %}
+
+{% endblock %}

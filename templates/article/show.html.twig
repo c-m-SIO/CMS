@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+
+<div class="b-example-divider"></div>
+
+  <div class="px-4 pt-5 my-5 text-center border-bottom">
+    <h1 class="display-4 fw-bold text-body-emphasis">{{ article.titre }}</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">{{ article.description | raw }}</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center mb-5">
+        <a href="{{ path('admin_article') }}"><button type="button" class="btn btn-primary btn-lg px-4 me-sm-3" >Modifier</button></a>
+        <a href="{{ path('app_article_index') }}"><button type="button" class="btn btn-outline-secondary btn-lg px-4" >Retour à la liste</button></a>
+      </div>
+    </div>
+    <div class="overflow-hidden" style="max-height: 30vh;">
+      <div class="container px-5">
+        <img src="bootstrap-docs.png" class="img-fluid border rounded-3 shadow-lg mb-4" alt="Example image" width="700" height="500" loading="lazy">
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class=" g-5"> 
+      <div class="col-md-10">
+        {% for commentaire in commentaires %}
+          {% if commentaire.statut == "OK" %}
+          <div class="card  mb-3" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{ commentaire.titre }}</h5>
+              <p class="card-text">{{ commentaire.contenu }}</p>
+              <p class="card-link"> {{ commentaire.date ? commentaire.date|date('Y-m-d H:i:s') : '' }}</p>
+              <p class="card-link">Another link</p>
+            </div>
+          </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{{ include('commentaire/_form.html.twig') }}
+
+
+
+{% endblock %}
