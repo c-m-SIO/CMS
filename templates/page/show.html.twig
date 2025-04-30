@@ -25,7 +25,9 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="btn-group">
                     <a href="{{ path('app_article_show', {'slug': article.slug}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
+                    {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REDAC') %}
                     <a href="{{ path('admin_article') }}"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
+                    {% endif %}
                   </div>
                   <small class="btn btn-dark my-2">{{ article.date|date('Y-m-d H:i:s')  }}</small>
                 </div>
@@ -51,7 +53,10 @@
               <p class="card-text">{{ galerie.description | raw }}</p>
               <div class="d-flex justify-content-between align-items-center">
                  <div class="btn-group">
-                  <a href="{{ path('admin_galerie') }}"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
+                 <a href="{{ path('app_galerie_show', {'id': galerie.id}) }}"><button type="button" class="btn btn-sm btn-outline-secondary">View</button></a>
+                 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_REDAC') %}
+                    <a href="{{ path('admin_galerie') }}"><button type="button" class="btn btn-sm btn-outline-secondary">Edit</button></a>
+                 {% endif %}
                 </div> 
                 {# <small class="btn btn-dark my-2">{{ galerie.date|date('Y-m-d H:i:s')  }}</small> #}
               </div>
@@ -69,7 +74,7 @@
         
   {% if is_granted('ROLE_ADMIN') %}
     <div class="mx-auto text-center">
-      <a href="{{ path('admin_article') }}"><button type="button" class="col-1 btn btn-primary my-2">Gérer</button></a>
+      <a href="{{ path('admin_page') }}"><button type="button" class="col-1 btn btn-primary my-2">Gérer</button></a>
     </div>
   {% elseif is_granted('ROLE_USER')%}
 

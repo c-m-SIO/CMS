@@ -23,25 +23,25 @@ final class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_page_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $page = new Page();
-        $form = $this->createForm(PageType::class, $page);
-        $form->handleRequest($request);
+    // #[Route('/new', name: 'app_page_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $page = new Page();
+    //     $form = $this->createForm(PageType::class, $page);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($page);
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($page);
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('page/new.html.twig', [
-            'page' => $page,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('page/new.html.twig', [
+    //         'page' => $page,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{slug}', name: 'app_page_show', methods: ['GET'])]
     public function show(string $slug, ArticleRepository $articleRepository, PageRepository $pageRepository, Page $page): Response
@@ -54,32 +54,32 @@ final class PageController extends AbstractController
         ]);
     }
 
-    #[Route('/{slug}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Page $page, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PageType::class, $page);
-        $form->handleRequest($request);
+    // #[Route('/{slug}/edit', name: 'app_page_edit', methods: ['GET', 'POST'])]
+    // public function edit(Request $request, Page $page, EntityManagerInterface $entityManager): Response
+    // {
+    //     $form = $this->createForm(PageType::class, $page);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('page/edit.html.twig', [
-            'page' => $page,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('page/edit.html.twig', [
+    //         'page' => $page,
+    //         'form' => $form,
+    //     ]);
+    // }
 
-    #[Route('/{slug}', name: 'app_page_delete', methods: ['POST'])]
-    public function delete(Request $request, Page $page, EntityManagerInterface $entityManager): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->getPayload()->getString('_token'))) {
-            $entityManager->remove($page);
-            $entityManager->flush();
-        }
+    // #[Route('/{slug}', name: 'app_page_delete', methods: ['POST'])]
+    // public function delete(Request $request, Page $page, EntityManagerInterface $entityManager): Response
+    // {
+    //     if ($this->isCsrfTokenValid('delete'.$page->getId(), $request->getPayload()->getString('_token'))) {
+    //         $entityManager->remove($page);
+    //         $entityManager->flush();
+    //     }
 
-        return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
-    }
+    //     return $this->redirectToRoute('app_page_index', [], Response::HTTP_SEE_OTHER);
+    // }
 }

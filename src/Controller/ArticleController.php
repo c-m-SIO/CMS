@@ -29,25 +29,25 @@ final class ArticleController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $article = new Article();
-        $form = $this->createForm(ArticleType::class, $article);
-        $form->handleRequest($request);
+    // #[Route('/new', name: 'app_article_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $article = new Article();
+    //     $form = $this->createForm(ArticleType::class, $article);
+    //     $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($article);
-            $entityManager->flush();
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($article);
+    //         $entityManager->flush();
 
-            return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
-        }
+    //         return $this->redirectToRoute('app_article_index', [], Response::HTTP_SEE_OTHER);
+    //     }
 
-        return $this->render('article/new.html.twig', [
-            'article' => $article,
-            'form' => $form,
-        ]);
-    }
+    //     return $this->render('article/new.html.twig', [
+    //         'article' => $article,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{slug}', name: 'app_article_show', methods: ['GET', 'POST'])]
     public function show(string $slug, Article $article, ArticleRepository $articleRepository, EntityManagerInterface $entityManager, request $request, Security $security, CommentaireRepository $commentaireRepository): Response
