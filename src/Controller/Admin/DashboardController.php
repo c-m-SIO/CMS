@@ -117,7 +117,8 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Article', 'fa fa-newspaper-o', Article::class);
             yield MenuItem::linkToCrud('Categorie', 'fa-solid fa-ticket', Categorie::class);
             yield MenuItem::linkToCrud('Tag', 'fa fa-tag', Tag::class);
-            yield MenuItem::linkToCrud('Commentaire', 'fa fa-comments', Commentaire::class);;
+            yield MenuItem::linkToCrud('Commentaire', 'fa fa-comments', Commentaire::class);
+            yield MenuItem::linkToUrl('Voir le blog', 'fa fa-blog', $this->generateUrl('app_page_index'));
         }
         else{
             yield MenuItem::linkToCrud('Galerie', 'fa fa-folder-open', Galerie::class);
@@ -127,6 +128,7 @@ class DashboardController extends AbstractDashboardController
             yield MenuItem::linkToCrud('Categorie', 'fa-solid fa-ticket', Categorie::class);
             yield MenuItem::linkToCrud('Tag', 'fa fa-tag', Tag::class);
             yield MenuItem::linkToCrud('Commentaire', 'fa fa-comments', Commentaire::class);
+            yield MenuItem::linkToUrl('Voir le blog', 'fa fa-blog', $this->generateUrl('app_page_index'));
         }
 
 
